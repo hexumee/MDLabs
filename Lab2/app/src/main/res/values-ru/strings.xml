@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Lab2</string>
+    <string name="select_all_text">Выбор</string>
+    <string name="unselect_all_text">Сброс</string>
+    <string name="elem_name_text">Имя</string>
+    <string name="any_string_value_text">Любое строковое значение</string>
+    <string name="plus">+</string>
+    <string name="out_selection_text">Вывод</string>
+    <string name="elem_name_expanded">Имя элемента</string>
+    <string name="plus_expanded">Добавить</string>
+    <string name="empty_input">Нельзя добавить пустую строку!</string>
+</resources>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/first_number_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="64dp">
+
+        <TextView
+            android:id="@+id/first_number_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/first_number_string"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_centerHorizontal="true"/>
+
+        <EditText
+            android:id="@+id/first_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/first_number_text"
+            android:inputType="numberDecimal"
+            android:hint="@string/any_decimal_prompt"
+            android:importantForAutofill="no"
+            android:layout_marginHorizontal="16dp"
+            android:textSize="20sp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/second_number_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/first_number_box">
+
+        <TextView
+            android:id="@+id/second_number_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/second_number_string"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_centerHorizontal="true"/>
+
+        <EditText
+            android:id="@+id/second_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/second_number_text"
+            android:inputType="numberDecimal"
+            android:hint="@string/any_decimal_prompt"
+            android:importantForAutofill="no"
+            android:layout_marginHorizontal="16dp"
+            android:textSize="20sp"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/err"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_below="@id/second_number_box"
+        android:layout_marginTop="72dp"
+        android:textSize="32sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="64dp">
+
+        <Button
+            android:id="@+id/add"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:text="@string/add_action"
+            android:textSize="32sp" />
+
+        <Space
+            android:layout_width="16dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/subtract"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:text="@string/subtract_action"
+            android:textSize="32sp"/>
+
+        <Space
+            android:layout_width="16dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/multiply"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:text="@string/multiply_action"
+            android:textSize="32sp" />
+
+        <Space
+            android:layout_width="16dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/divide"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:text="@string/divide_action"
+            android:textSize="32sp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

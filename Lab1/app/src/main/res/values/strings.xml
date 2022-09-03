@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Lab1</string>
+    <string name="first_number_string">Первое число</string>
+    <string name="second_number_string">Второе число</string>
+    <string name="any_decimal_prompt">Любое числовое значение</string>
+    <string name="add_action">+</string>
+    <string name="subtract_action">–</string>
+    <string name="multiply_action">×</string>
+    <string name="divide_action">/</string>
+    <string name="result_float_template">Результат: %f</string>
+    <string name="result_int_template">Результат: %d</string>
+    <string name="empty_field">Поле не может быть пустым!</string>
+    <string name="result_text">Результат</string>
+</resources>

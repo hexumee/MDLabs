@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/top_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp">
+
+        <Button
+            android:id="@+id/select_all"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/select_all_text"
+            android:layout_weight="1"/>
+
+        <Space
+            android:layout_width="8dp"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/unselect_all"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/unselect_all_text"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_marginHorizontal="8dp"
+        android:divider="@color/gray"
+        android:dividerHeight="1dp"
+        android:choiceMode="multipleChoice"/>
+
+    <LinearLayout
+        android:id="@+id/name_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="8dp">
+
+        <TextView
+            android:id="@+id/elem_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/elem_name_expanded"
+            android:textSize="20sp"
+            android:layout_weight="4"/>
+
+        <EditText
+            android:id="@+id/name_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/any_string_value_text"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:layout_marginEnd="12dp"
+            android:layout_weight="2.25"/>
+
+        <Button
+            android:id="@+id/add_new"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/plus_expanded"
+            android:layout_weight="4"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/out_selection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/out_selection_text"
+        android:layout_marginHorizontal="8dp"/>
+
+</LinearLayout>

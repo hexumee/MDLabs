@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name" translatable="false">Lab2</string>
+    <string name="select_all_text">Select</string>
+    <string name="unselect_all_text">Reset</string>
+    <string name="elem_name_text">Name</string>
+    <string name="any_string_value_text">Any string value</string>
+    <string name="plus">+</string>
+    <string name="out_selection_text">Output</string>
+    <string name="elem_name_expanded">Name of element</string>
+    <string name="plus_expanded">Add to list</string>
+    <string name="empty_input">Can\'t add an empty string!</string>
+</resources>
