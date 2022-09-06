@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Lab3</string>
+    <string name="graph_expression">y = x * cos(x/2)</string>
+    <string name="any_decimal_value">Любое десятичное значение</string>
+    <string name="left_x_bound">От Х: </string>
+    <string name="right_x_bound">До X:</string>
+    <string name="upper_y_bound">От Y: </string>
+    <string name="lower_y_bound">До Y: </string>
+    <string name="build_plot_text">Построить</string>
 </resources>
