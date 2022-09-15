@@ -63,7 +63,11 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(), ResultActivity.class).putExtra("result", x*y));
                     break;
                 case OP_TYPE_DIV:
-                    startActivity(new Intent(getApplicationContext(), ResultActivity.class).putExtra("result", x/y));
+                    if (y != 0) {
+                        startActivity(new Intent(getApplicationContext(), ResultActivity.class).putExtra("result", x/y));
+                    } else {
+                        startActivity(new Intent(getApplicationContext(), ResultActivity.class).putExtra("err", getString(R.string.inf)));
+                    }
                     break;
                 default:
                     break;

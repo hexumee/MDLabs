@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">Lab4</string>
+    <string name="app_name">The Road</string>
+    <string name="err_empty_nickname">Nickname can\'t be empty!</string>
+    <string name="title">The Road</string>
+    <string name="start">Start</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="your_nickname_text">Your nickname</string>
+    <string name="nickname_hint">Write it down here</string>
+    <string name="leaderboard_title">Leaderboard</string>
+    <string name="leaderboard_back">Back</string>
+    <string name="switch_sort_short">Sw sort</string>
+    <string name="game_over_template">Game over! Your score is %d. Round time is %d seconds.</string>
 </resources>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    app:cardBackgroundColor="?attr/cardColor">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/row_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:fontFamily="@font/teletactile"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:id="@+id/row_nickname"
+            android:layout_below="@id/row_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/teletactile"
+            android:textAlignment="center"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:id="@+id/row_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/row_nickname"
+            android:layout_marginStart="32dp"
+            android:textSize="24sp"
+            android:fontFamily="@font/teletactile"
+            android:textAlignment="center"
+            app:drawableStartCompat="@drawable/ic_rating"
+            app:drawableTint="?attr/tintColor"
+            android:drawablePadding="4dp" />
+
+        <TextView
+            android:id="@+id/row_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:layout_below="@id/row_nickname"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="32dp"
+            android:fontFamily="@font/teletactile"
+            android:textAlignment="center"
+            app:drawableStartCompat="@drawable/ic_timer"
+            app:drawableTint="?attr/tintColor"
+            android:drawablePadding="4dp" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

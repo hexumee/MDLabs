@@ -31,32 +31,32 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.build_plot).setOnClickListener(v -> {
             if (leftXGraphBound.getText().toString().isEmpty()) {
-                leftXGraphBound.setError("Значение не может быть пустым!");
+                leftXGraphBound.setError(getString(R.string.err_empty_value));
                 return;
             }
 
             if (rightXGraphBound.getText().toString().isEmpty()) {
-                rightXGraphBound.setError("Значение не может быть пустым!");
+                rightXGraphBound.setError(getString(R.string.err_empty_value));
                 return;
             }
 
             if (Float.parseFloat(leftXGraphBound.getText().toString()) > Float.parseFloat(rightXGraphBound.getText().toString())) {
-                Toast.makeText(this, "От X должно быть меньше До X", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.err_x_bound_issue), Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (upperYGraphBound.getText().toString().isEmpty()) {
-                upperYGraphBound.setError("Значение не может быть пустым!");
+                upperYGraphBound.setError(getString(R.string.err_empty_value));
                 return;
             }
 
             if (lowerYGraphBound.getText().toString().isEmpty()) {
-                lowerYGraphBound.setError("Значение не может быть пустым!");
+                lowerYGraphBound.setError(getString(R.string.err_empty_value));
                 return;
             }
 
             if (Float.parseFloat(upperYGraphBound.getText().toString()) > Float.parseFloat(lowerYGraphBound.getText().toString())) {
-                Toast.makeText(this, "От Y должно быть меньше До Y", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.err_y_bound_issue), Toast.LENGTH_SHORT).show();
                 return;
             }
 

@@ -24,12 +24,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            Locale.setDefault(App.localeRu);
             Configuration config = new Configuration();
             config.locale = App.localeRu;
             getResources().updateConfiguration(config, getResources().getDisplayMetrics());
         } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Locale.setDefault(App.localeEn);
             Configuration configuration = new Configuration();
             configuration.locale = App.localeEn;
             getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());

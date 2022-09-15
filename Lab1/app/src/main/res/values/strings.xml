@@ -9,6 +9,8 @@
     <string name="divide_action">/</string>
     <string name="result_float_template">Результат: %f</string>
     <string name="result_int_template">Результат: %d</string>
+    <string name="result_str_template">Результат: %s</string>
     <string name="empty_field">Поле не может быть пустым!</string>
     <string name="result_text">Результат</string>
+    <string name="inf">Бесконечность</string>
 </resources>

@@ -1,18 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:fontFamily="@font/teletactile"
+        android:text="@string/title"
+        android:textSize="48sp"
+        android:layout_marginVertical="64dp"
+        android:layout_centerHorizontal="true" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <Button
+            android:id="@+id/start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/start"
+            android:textSize="32sp"
+            android:textColor="?attr/textColor"
+            android:fontFamily="@font/teletactile"
+            android:layout_marginVertical="16dp"
+            android:layout_centerHorizontal="true"
+            style="@style/Widget.AppCompat.Button.Borderless" />
+
+        <Button
+            android:id="@+id/leaderboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/leaderboard"
+            android:textSize="32sp"
+            android:textColor="?attr/textColor"
+            android:fontFamily="@font/teletactile"
+            android:layout_marginVertical="16dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/start"
+            style="@style/Widget.AppCompat.Button.Borderless" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp">
+
+        <TextView
+            android:id="@+id/nickname_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignStart="@id/nickname"
+            android:text="@string/your_nickname_text"
+            android:textColor="?attr/textColor"
+            android:textSize="16sp"
+            android:fontFamily="@font/teletactile"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/nickname"
+            android:layout_width="312dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/nickname_text"
+            android:fontFamily="@font/teletactile"
+            android:maxLength="16"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:hint="@string/nickname_hint"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

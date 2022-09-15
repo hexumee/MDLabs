@@ -22,21 +22,26 @@ public class ResultActivity extends AppCompatActivity {
 
         TextView resultText = findViewById(R.id.result_text);
         float res = getIntent().getFloatExtra("result", 0f);
+        String err = getIntent().getStringExtra("err");
 
-        if (res != (int) res) {
-            StringBuilder sb = new StringBuilder(String.format(getResources().getString(R.string.result_float_template), res));
+        if (err == null) {
+            if (res != (int) res) {
+                StringBuilder sb = new StringBuilder(String.format(getResources().getString(R.string.result_float_template), res));
 
-            for (int i = sb.length()-1; i > 0; i--) {
-                if (sb.charAt(i) == '0') {
-                    sb.deleteCharAt(i);
-                } else {
-                    break;
+                for (int i = sb.length()-1; i > 0; i--) {
+                    if (sb.charAt(i) == '0') {
+                        sb.deleteCharAt(i);
+                    } else {
+                        break;
+                    }
                 }
-            }
 
-            resultText.setText(sb);
+                resultText.setText(sb);
+            } else {
+                resultText.setText(String.format(getResources().getString(R.string.result_int_template), (int)res));
+            }
         } else {
-            resultText.setText(String.format(getResources().getString(R.string.result_int_template), (int)res));
+            resultText.setText(String.format(getResources().getString(R.string.result_str_template), err));
         }
     }
 

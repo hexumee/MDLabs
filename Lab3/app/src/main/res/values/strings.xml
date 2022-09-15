@@ -7,4 +7,7 @@
     <string name="upper_y_bound">От Y: </string>
     <string name="lower_y_bound">До Y: </string>
     <string name="build_plot_text">Построить</string>
+    <string name="err_empty_value">Значение не может быть пустым!</string>
+    <string name="err_x_bound_issue">От X должно быть меньше До X</string>
+    <string name="err_y_bound_issue">От Y должно быть меньше До Y</string>
 </resources>
