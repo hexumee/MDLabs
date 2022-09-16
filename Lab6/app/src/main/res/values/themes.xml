@@ -1,0 +1,9 @@
+<resources>
+    <style name="Theme.TheRoad" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="tintColor">@color/lightTint</item>
+        <item name="textColor">@color/lightTextColor</item>
+        <item name="cardColor">@color/lightCardColor</item>
+
+        <item name="android:windowBackground">@color/lightBackground</item>
+    </style>
+</resources>
