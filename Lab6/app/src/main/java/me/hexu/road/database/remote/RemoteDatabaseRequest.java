@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class RemoteDatabaseRequest {
-    private static final String SERVER_URL = "http://192.168.1.101:5000";    // IP-адрес сервера
+    private static final String SERVER_URL = "http://192.168.132.84:5000";    // IP-адрес сервера
 
     private static String requestGetAsync(String sortType) throws InterruptedException {
         final AtomicReference<HttpURLConnection> urlConnection = new AtomicReference<>();    // Сетевое поключение

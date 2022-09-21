@@ -49,12 +49,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
 
     private final GestureDetector swipeDetector;
 
-    private int rotation = 0;                // Переменная, определяющая поворот машины+
-    private final AtomicBoolean isOnLeftSide = new AtomicBoolean(false);    // Атомарная переменная, определяющая положение машины на левой полосе
-    private float carPosition = 0;           // Текущая позиция машины на экране по оси X
-    private float defaultCarPosition = 0;    // Начальная позиция машины на экране по оси X
-    private final AtomicBoolean isSlowingDown = new AtomicBoolean(false);     // Атомарная (для последовательного обращения к ней в множестве потоков) переменная, определяющая торможение машины
-    private final AtomicBoolean isAccelerating = new AtomicBoolean(false);    // Атомарная переменная, определяющая ускорение машины
+    private int rotation = 0;                  // Переменная, определяющая поворот машины+
+    private boolean isOnLeftSide = false;      // Переменная, определяющая положение машины на левой полосе
+    private float carPosition = 0;             // Текущая позиция машины на экране по оси X
+    private float defaultCarPosition = 0;      // Начальная позиция машины на экране по оси X
+    private boolean isAccelerating = true;     // Переменная, определяющая ускорение машины
+    private boolean actionLockDown = false;    // Переменная, позволяющая запретить одновременное ускорение и торможение
 
     private Bitmap car = null;
     private Bitmap carLeftRotated = null;
@@ -72,6 +72,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
     private int usingRandomPatternIndex = -1;
 
     private int carAcceleratorYValue = 24;                 // Начальное значение ускорения машины по оси Y
+    private int carAcceleratorYRightValue = 24;            // Начальное значение ускорения машины по оси Y
     private int carAcceleratorXValue = 32;                 // Начальное значение ускорения машины по оси X
     private final int carAcceleratorYValueDefault = 24;    // Стандартное значение ускорения машины по оси Y
     private int carAcceleratorYValueBefore = 24;           // Значение ускорения машины по оси Y, к которому нужно вернуться после конца торможения
@@ -88,30 +89,56 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
     private final Handler slowingDownHandler = new Handler();
     private final Handler acceleratingHandler = new Handler();
     private final Runnable slowingDownAction = () -> {
-        isSlowingDown.set(true);
+        if (actionLockDown) {
+            return;
+        }
 
-        while (isSlowingDown.get() && phaseAccelerator >= phaseAcceleratorDefault) {
-            if (carAcceleratorYValue <= carAcceleratorYValueDefault && phaseAccelerator <= phaseAcceleratorDefault) {
+        isAccelerating = false;
+        actionLockDown = true;
+
+        while (actionLockDown && !isAccelerating && phaseAccelerator >= phaseAcceleratorDefault) {
+            if (carAcceleratorYRightValue <= carAcceleratorYValueDefault && phaseAccelerator <= phaseAcceleratorDefault) {
                 break;
             }
 
-            carAcceleratorYValue -= 4;
-            carAcceleratorXValue -= 4;
+            carAcceleratorYRightValue -= 2;
+            carAcceleratorXValue -= 2;
             phaseAccelerator--;
+
+            try {
+                TimeUnit.MILLISECONDS.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+
+        actionLockDown = false;
     };
     private final Runnable acceleratingAction = () -> {
-        isAccelerating.set(true);
+        if (actionLockDown) {
+            return;
+        }
 
-        while (isAccelerating.get() && phaseAccelerator <= phaseAcceleratorBefore) {
-            if (carAcceleratorYValue >= carAcceleratorYValueBefore && phaseAccelerator >= phaseAcceleratorBefore) {
+        isAccelerating = true;
+        actionLockDown = true;
+
+        while (actionLockDown && isAccelerating && phaseAccelerator <= phaseAcceleratorBefore) {
+            if (carAcceleratorYRightValue >= carAcceleratorYValueBefore && phaseAccelerator >= phaseAcceleratorBefore) {
                 break;
             }
 
-            carAcceleratorYValue++;
-            carAcceleratorXValue++;
+            carAcceleratorYRightValue += 2;
+            carAcceleratorXValue += 2;
             phaseAccelerator++;
+
+            try {
+                TimeUnit.MILLISECONDS.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+
+        actionLockDown = false;
     };
 
 
@@ -189,19 +216,20 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
         new Thread(() -> {
             while (mIsRunning) {
                 try {
-                    if (score >= 10 && score % 10 == 0) {
+                    if (isAccelerating && score >= 10 && score % 10 == 0) {
                         phaseAccelerator++;
                         phaseAcceleratorBefore++;
 
-                        carAcceleratorYValue += 4;
-                        carAcceleratorXValue += 4;
-                        carAcceleratorYValueBefore += 4;
+                        carAcceleratorYValue += 2;
+                        carAcceleratorYRightValue += 2;
+                        carAcceleratorXValue += 2;
+                        carAcceleratorYValueBefore += 2;
 
                         usingRandomPatternIndex++;
                         carSpawner = new Random(hexSpeech[usingRandomPatternIndex % hexSpeech.length]);
                     }
 
-                    TimeUnit.MILLISECONDS.sleep(1000);
+                    TimeUnit.MILLISECONDS.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -215,31 +243,31 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
                     Iterator<Car> itL = carsOnLeftSide.iterator();
                     while (itL.hasNext()) {
                         Car val = itL.next();
-                        if (val.getCarOffset() > getHeight()+car.getHeight()) {
+                        if (val.getCarOffset() > getHeight()-mRoadOffset*2+car.getHeight()) {
                             itL.remove();
-                        }
-                    }
-
-                    Iterator<Car> itR = carsOnRightSide.iterator();
-                    while (itR.hasNext()) {
-                        Car val = itR.next();
-                        if (val.getCarOffset() > getHeight()+car.getHeight()) {
-                            itR.remove();
-                            score++;
                         }
                     }
 
                     for (int i = 0; i < carsOnLeftSide.size(); i++) {
                         carsOnLeftSide.get(i).setCarOffset(carsOnLeftSide.get(i).getCarOffset()+carAcceleratorYValue);
 
-                        if (i == carsOnLeftSide.size()-1) {
+                        if (i == 0) {
                             leftCarOffset = carsOnLeftSide.get(i).getCarOffset();
                         }
                     }
 
+                    Iterator<Car> itR = carsOnRightSide.iterator();
+                    while (itR.hasNext()) {
+                        Car val = itR.next();
+                        if (val.getCarOffset()-car.getHeight() > getHeight()-mRoadOffset*2) {
+                            itR.remove();
+                            score++;
+                        }
+                    }
+
                     for (int i = 0; i < carsOnRightSide.size(); i++) {
-                        if (!isSlowingDown.get()) {
-                            carsOnRightSide.get(i).setCarOffset(carsOnRightSide.get(i).getCarOffset()+carAcceleratorYValue);
+                        if (isAccelerating) {
+                            carsOnRightSide.get(i).setCarOffset(carsOnRightSide.get(i).getCarOffset()+carAcceleratorYRightValue);
 
                             if (i == 0) {
                                 rightCarOffset = carsOnRightSide.get(i).getCarOffset();
@@ -268,7 +296,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
 
                     TimeUnit.MILLISECONDS.sleep(1000);
 
-                    if (!isSlowingDown.get() && carSpawner.nextDouble() > 0.5) {
+                    if (isAccelerating && carSpawner.nextDouble() > 0.5) {
                         if (carsOnRightSide.size() > 0 && carsOnRightSide.get(carsOnRightSide.size()-1).getCarOffset() > car.getHeight()) {
                             carsOnRightSide.add(new Car(-car.getHeight(), carSprites.getRandomRightCar()));
                         } else if (carsOnRightSide.size() == 0) {
@@ -303,30 +331,29 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
         new Thread(() -> {
             while (mIsRunning) {
                 try {
-                    if (isOnLeftSide.get() && youAreBeingWatched) {
+                    if (isOnLeftSide && youAreBeingWatched) {
+                        TimeUnit.MILLISECONDS.sleep(50);
                         mIsRunning = false;
                         eventCallback.onGameOver(score, (System.currentTimeMillis()-gameStartTime)/1000);
                     }
 
-                    if (isOnLeftSide.get() &&
-                        leftCarOffset >= getHeight()-mRoadOffset*2-car.getHeight()-92 &&
-                        leftCarOffset < getHeight()-mRoadOffset*2-32 &&
-                        rotation != 1
+                    if (isOnLeftSide && rotation != 1 &&
+                        leftCarOffset <= getHeight()-mRoadOffset*2.5 &&
+                        leftCarOffset+car.getHeight() >= getHeight()-mRoadOffset*2
                     ) {
+                        TimeUnit.MILLISECONDS.sleep(50);
                         mIsRunning = false;
                         eventCallback.onGameOver(score, (System.currentTimeMillis()-gameStartTime)/1000);
                     }
 
-                    if (!isOnLeftSide.get() &&
-                        rightCarOffset >= getHeight()-mRoadOffset*2-car.getHeight()+92 &&
-                        rightCarOffset < getHeight()-mRoadOffset*2+32 &&
-                        rotation != -1
+                    if (!isOnLeftSide && rotation != -1 &&
+                        rightCarOffset <= getHeight()-mRoadOffset*2 &&
+                        rightCarOffset+car.getHeight() >= getHeight()-mRoadOffset*2
                     ) {
+                        TimeUnit.MILLISECONDS.sleep(50);
                         mIsRunning = false;
                         eventCallback.onGameOver(score, (System.currentTimeMillis()-gameStartTime)/1000);
                     }
-
-                    TimeUnit.MILLISECONDS.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -412,11 +439,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
 
         // Нажали на экран, но не свайпнули
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            isAccelerating.set(false);
             acceleratingHandler.removeCallbacks(acceleratingAction);
             slowingDownHandler.postDelayed(slowingDownAction, 320);
         } else if (event.getAction() == MotionEvent.ACTION_UP) {    // Отпустили палец
-            isSlowingDown.set(false);
             slowingDownHandler.removeCallbacks(slowingDownAction);
             acceleratingHandler.postDelayed(acceleratingAction, 320);
         }
@@ -436,8 +461,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
                     try {
                         carPosition -= carAcceleratorXValue;
 
-                        if (!isOnLeftSide.get() && carPosition <= defaultCarPosition-(getWidth()/2f-mRoadOffset*2)+12) {
-                            isOnLeftSide.set(true);
+                        if (!isOnLeftSide && carPosition <= defaultCarPosition-(getWidth()/2f-mRoadOffset*2)+12) {
+                            isOnLeftSide = true;
                         }
 
                         TimeUnit.MILLISECONDS.sleep(50);
@@ -454,8 +479,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
                     try {
                         carPosition += carAcceleratorXValue;
 
-                        if (isOnLeftSide.get() && carPosition >= defaultCarPosition-(getWidth()/2f-mRoadOffset*2)+24) {
-                            isOnLeftSide.set(false);
+                        if (isOnLeftSide && carPosition >= defaultCarPosition-(getWidth()/2f-mRoadOffset*2)+24) {
+                            isOnLeftSide = false;
                         }
 
                         TimeUnit.MILLISECONDS.sleep(50);
